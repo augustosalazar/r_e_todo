@@ -16,7 +16,7 @@ type TodoItem = {
 };
 
 export default function Index() {
-const [visible, setVisible] = React.useState<boolean>(false);
+  const [visible, setVisible] = React.useState<boolean>(false);
   const [data, setData] = useState<TodoItem[]>([{ id: 1, name: "Item 1" }]);
   const [currentItem, setCurrentItem] = useState<TodoItem | null>(null);
   const [inputValue, setInputValue] = useState<string>("");
