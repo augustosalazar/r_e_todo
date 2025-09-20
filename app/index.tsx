@@ -7,7 +7,8 @@ import {
   FAB,
   Modal,
   Portal,
-  TextInput
+  TextInput,
+  useTheme
 } from "react-native-paper";
 
 type TodoItem = {
@@ -20,6 +21,8 @@ export default function Index() {
   const [data, setData] = useState<TodoItem[]>([{ id: 1, name: "Item 1" }]);
   const [currentItem, setCurrentItem] = useState<TodoItem | null>(null);
   const [inputValue, setInputValue] = useState<string>("");
+
+  const theme = useTheme();
 
   const renderItem = ({ item }: ListRenderItemInfo<TodoItem>) => {
     const renderRightActions = () => (
@@ -101,7 +104,9 @@ export default function Index() {
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={{ padding: 4 }}
         />
-        <FAB style={styles.fab} icon="plus" color="white" onPress={addItem} />
+        <FAB style={styles.fab}
+          theme={{ colors: { accent: theme.colors.primary } }}
+          icon="plus" color="white" onPress={addItem} />
       </View>
       <Portal>
         <Modal
@@ -156,7 +161,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 16,
     right: 16,
-    backgroundColor: "#6200ee"
   },
   optionButton: {
     marginVertical: 5
