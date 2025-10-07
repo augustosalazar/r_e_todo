@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet, Text, View } from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet, Text } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import {
   Appbar,
@@ -7,6 +7,7 @@ import {
   FAB,
   Modal,
   Portal,
+  Surface,
   TextInput,
   useTheme
 } from "react-native-paper";
@@ -26,9 +27,9 @@ export default function Index() {
 
   const renderItem = ({ item }: ListRenderItemInfo<TodoItem>) => {
     const renderRightActions = () => (
-      <View style={styles.rightAction}>
+      <Surface style={styles.rightAction}>
         <Text style={styles.deleteText}>Eliminar</Text>
-      </View>
+      </Surface>
     );
 
     return (
@@ -43,7 +44,7 @@ export default function Index() {
           }
         }}
       >
-        <View style={styles.item}>
+        <Surface style={styles.item}>
           <Text>{item.name}</Text>
           <Button
             mode="contained-tonal"
@@ -52,7 +53,7 @@ export default function Index() {
           >
             Edit
           </Button>
-        </View>
+        </Surface>
       </Swipeable>
     );
   };
@@ -92,12 +93,47 @@ export default function Index() {
     setData((prevData) => prevData.filter((item) => item.id !== id));
   };
 
+  const newEditModal = <Portal>
+    <Modal
+      visible={visible}
+      onDismiss={() => setVisible(false)}
+      contentContainerStyle={styles.bottomSheetStyle}
+    >
+      <TextInput
+        style={styles.input}
+        placeholder="Enter TODO item"
+        value={inputValue}
+        onChangeText={setInputValue}
+        onSubmitEditing={saveItem} />
+      <Surface
+        style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+      >
+        <Button
+          mode="outlined"
+          onPress={saveItem}
+          style={styles.optionButton}
+        >
+          Save
+        </Button>
+
+        <Button
+          mode="outlined"
+          onPress={() => setVisible(false)}
+          style={styles.optionButton}
+        >
+          Cancel
+        </Button>
+      </Surface>
+    </Modal>
+  </Portal>;
+
+
   return (
-    <View style={{ flex: 1 }}>
+    <Surface style={{ flex: 1 }}>
       <Appbar.Header>
         <Appbar.Content title="Todo List" />
       </Appbar.Header>
-      <View style={{ flex: 1 }}>
+      <Surface style={{ flex: 1 }}>
         <FlatList
           data={data}
           renderItem={renderItem}
@@ -107,42 +143,9 @@ export default function Index() {
         <FAB style={styles.fab}
           theme={{ colors: { accent: theme.colors.primary } }}
           icon="plus" color="white" onPress={addItem} />
-      </View>
-      <Portal>
-        <Modal
-          visible={visible}
-          onDismiss={() => setVisible(false)}
-          contentContainerStyle={styles.bottomSheetStyle}
-        >
-          <TextInput
-            style={styles.input}
-            placeholder="Enter TODO item"
-            value={inputValue}
-            onChangeText={setInputValue}
-            onSubmitEditing={saveItem}
-          />
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-evenly" }}
-          >
-            <Button
-              mode="outlined"
-              onPress={saveItem}
-              style={styles.optionButton}
-            >
-              Save
-            </Button>
-
-            <Button
-              mode="outlined"
-              onPress={() => setVisible(false)}
-              style={styles.optionButton}
-            >
-              Cancel
-            </Button>
-          </View>
-        </Modal>
-      </Portal>
-    </View>
+      </Surface>
+      {newEditModal}
+    </Surface>
   );
 }
 
@@ -166,7 +169,6 @@ const styles = StyleSheet.create({
     marginVertical: 5
   },
   bottomSheetStyle: {
-    backgroundColor: "white",
     padding: 10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -176,7 +178,6 @@ const styles = StyleSheet.create({
     bottom: 0
   },
   input: {
-    backgroundColor: "white",
     borderRadius: 5,
     marginBottom: 10
   },

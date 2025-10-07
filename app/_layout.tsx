@@ -12,6 +12,7 @@ export default function RootLayout() {
 
   const scheme = useColorScheme();
   const theme = scheme === "dark" ? darkTheme : lightTheme;
+  console.log("Current theme:", scheme);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
