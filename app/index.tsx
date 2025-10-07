@@ -169,13 +169,10 @@ const styles = StyleSheet.create({
     marginVertical: 5
   },
   bottomSheetStyle: {
+    backgroundColor: "white",
     padding: 10,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0
+    borderRadius: 20,
+    margin: 10,
   },
   input: {
     borderRadius: 5,
