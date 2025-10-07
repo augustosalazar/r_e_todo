@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet, Text } from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet, Text, View } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import {
   Appbar,
@@ -105,8 +105,8 @@ export default function Index() {
         value={inputValue}
         onChangeText={setInputValue}
         onSubmitEditing={saveItem} />
-      <Surface
-        style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+      <View
+        style={{ flexDirection: "row", justifyContent: "space-evenly",backgroundColor: theme.colors.background }}
       >
         <Button
           mode="outlined"
@@ -123,17 +123,17 @@ export default function Index() {
         >
           Cancel
         </Button>
-      </Surface>
+      </View>
     </Modal>
   </Portal>;
 
 
   return (
-    <Surface style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <Appbar.Header>
         <Appbar.Content title="Todo List" />
       </Appbar.Header>
-      <Surface style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
         <FlatList
           data={data}
           renderItem={renderItem}
@@ -143,9 +143,9 @@ export default function Index() {
         <FAB style={styles.fab}
           theme={{ colors: { accent: theme.colors.primary } }}
           icon="plus" color="white" onPress={addItem} />
-      </Surface>
+      </View>
       {newEditModal}
-    </Surface>
+    </View>
   );
 }
 
